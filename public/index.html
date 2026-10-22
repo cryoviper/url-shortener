@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Snip · URL Shortener</title>
+  <meta name="description" content="Shorten links, pick a custom alias, get a QR code and see click stats.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FFD43B'/%3E%3Cpath d='M10 22l12-12M13 10h9v9' stroke='%23111' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/"><span class="logo" aria-hidden="true">↗</span>Snip</a>
+    <a class="gh" href="https://github.com/cryoviper/url-shortener" target="_blank" rel="noopener">Source on GitHub</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Long links,<br><span>made short.</span></h1>
+      <p class="sub">Paste a link, pick an alias if you like, and get a short URL with a QR code and click stats.</p>
+
+      <form id="form" class="form" novalidate>
+        <div class="field grow">
+          <label for="url">Long link</label>
+          <input id="url" name="url" type="url" inputmode="url" autocomplete="off" placeholder="https://example.com/a/very/long/link" required>
+        </div>
+        <div class="field">
+          <label for="slug">Custom alias <small>(optional)</small></label>
+          <div class="alias"><span id="hostLabel">snip/</span><input id="slug" name="slug" maxlength="32" placeholder="my-link" autocomplete="off"></div>
+        </div>
+        <button class="btn primary" id="submit" type="submit">Shorten</button>
+      </form>
+      <p class="err" id="err" role="alert"></p>
+
+      <div class="result" id="result" hidden>
+        <div class="result-main">
+          <span class="label">Your short link</span>
+          <a id="shortLink" class="short" target="_blank" rel="noopener"></a>
+          <span class="orig" id="origLink"></span>
+          <div class="row">
+            <button class="btn" type="button" id="copyBtn">Copy link</button>
+            <button class="btn ghost" type="button" id="statsBtn">View stats</button>
+          </div>
+          <p class="token-note">Saved to this browser's list below, including a private token that lets you delete it later.</p>
+        </div>
+        <img id="qr" class="qr" alt="QR code for the short link" width="132" height="132">
+      </div>
+    </section>
+
+    <section class="mine" aria-labelledby="mineH">
+      <div class="mine-head">
+        <h2 id="mineH">Your links</h2>
+        <span class="muted">Stored in this browser</span>
+      </div>
+      <ul id="list" class="list"></ul>
+    </section>
+  </main>
+
+  <dialog id="stats" aria-labelledby="statsTitle">
+    <div class="dlg">
+      <div class="dlg-head">
+        <div>
+          <h2 id="statsTitle">Stats</h2>
+          <a id="statsUrl" class="orig" target="_blank" rel="noopener"></a>
+        </div>
+        <button class="x" type="button" id="closeStats" aria-label="Close">✕</button>
+      </div>
+      <div id="statsBody"><p class="muted">Loading…</p></div>
+    </div>
+  </dialog>
+
+  <footer class="foot">Built by <a href="https://github.com/cryoviper" target="_blank" rel="noopener">Praveen Sinwar</a> · Node.js, Express and SQLite</footer>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
